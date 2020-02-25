@@ -1,11 +1,9 @@
 ## To run the app
 
-Install required packages using:
+1. Rename `.env.template` file to `.env` and fill in the environment variables
 
-#### `npm install`
+2. Install required packages using `npm install`
 
-Run the app in the development mode:
+3. Run the app in the development mode using `npm start`
 
-#### `npm start`
-
-Open [http://localhost:3000](http://localhost:3000) to view the app in the browser
+4. Open [http://localhost:3000](http://localhost:3000) to view the app in the browser
