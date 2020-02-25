@@ -1,6 +1,6 @@
 import { gql } from 'apollo-boost'
 
-export const POST_FRAGMENT = gql`
+const POST_FRAGMENT = gql`
   fragment PostFragment on Post {
     id
     post_status
