@@ -1,96 +1,98 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from '@emotion/styled'
-import { Link, useLocation } from 'react-router-dom'
-import { COLORS } from '../constants'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { Link } from 'react-router-dom'
+import NavBar from './NavBar'
+import SideBar from './SideBar'
+import {
+  COLORS,
+  SIDE_BAR_TRANSITION_DURATION,
+  SIDE_BAR_WIDTH,
+} from '../constants'
 
 function Layout({ children }) {
-  const { pathname } = useLocation()
+  const [isSideBarOpen, setIsSideBarOpen] = useState(false)
+
+  useEffect(() => {
+    document.querySelector('body').style.overflowX = isSideBarOpen
+      ? 'hidden'
+      : 'visible'
+  }, [isSideBarOpen])
 
   return (
-    <div>
-      <TopBar />
-      <NavBar>
-        <NavBarLink to="/" pathname={pathname}>
-          HOME
-        </NavBarLink>
-        <NavBarLink to="/category/บริษัทไทย" pathname={pathname}>
-          บริษัทไทย
-        </NavBarLink>
-        <NavBarLink to="/category/เศรษฐกิจ" pathname={pathname}>
-          เศรษฐกิจ
-        </NavBarLink>
-        <NavBarLink to="/category/แนวคิดการลงทุน" pathname={pathname}>
-          แนวคิดการลงทุน
-        </NavBarLink>
-        <NavBarLink to="/category/บริษัทต่างประเทศ" pathname={pathname}>
-          บริษัทต่างประเทศ
-        </NavBarLink>
-        <NavBarLink to="/category/ประวัติศาสตร์" pathname={pathname}>
-          ประวัติศาสตร์
-        </NavBarLink>
-        <NavBarLink to="/category/เทคโนโลยี" pathname={pathname}>
-          เทคโนโลยี
-        </NavBarLink>
-        <NavBarLink to="/category/บุคคลที่น่าสนใจ" pathname={pathname}>
-          บุคคลที่น่าสนใจ
-        </NavBarLink>
-        <NavBarLink to="/category/ABOUT" pathname={pathname}>
-          ABOUT
-        </NavBarLink>
-        <NavBarLink to="/category/CAREERS" pathname={pathname}>
-          CAREERS
-        </NavBarLink>
-      </NavBar>
-      {children}
-    </div>
+    <>
+      <Main open={!isSideBarOpen}>
+        <MainOverlay
+          show={isSideBarOpen}
+          onClick={() => setIsSideBarOpen(false)}
+        />
+        <TopBar>
+          <Button
+            onClick={() => {
+              setIsSideBarOpen(!isSideBarOpen)
+            }}
+          >
+            <FontAwesomeIcon icon={faBars} />
+          </Button>
+          <Logo>ลงทุนแมน</Logo>
+          <Button>
+            <FontAwesomeIcon icon={faSearch} />
+          </Button>
+        </TopBar>
+        <NavBar />
+        {children}
+      </Main>
+
+      <SideBar open={isSideBarOpen} />
+    </>
   )
 }
 
-function NavBarLink({ to, pathname, children }) {
-  return (
-    <StyledNavBarLink to={to} active={pathname === to ? 1 : 0}>
-      {children}
-    </StyledNavBarLink>
-  )
-}
+const Main = styled.div`
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: ${props => (props.open ? '0px' : `${SIDE_BAR_WIDTH}px`)};
+  transition: all ${SIDE_BAR_TRANSITION_DURATION} linear;
+`
+
+const MainOverlay = styled.div`
+  display: ${props => (props.show ? 'block' : 'none')};
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: ${COLORS.OVERLAY};
+  z-index: 1;
+`
 
 const TopBar = styled.div`
   background-color: ${COLORS.BLUE};
   height: 60px;
   width: 100%;
-`
-
-const NavBar = styled.div`
-  width: 1000px;
-  border-bottom: 3px solid ${COLORS.BLUE};
-  padding: 16px 8px;
-  margin: 0 auto;
-  box-sizing: border-box;
 
   display: flex;
   justify-content: space-between;
-
-  @media (max-width: 1000px) {
-    display: none;
-  }
+  align-items: center;
 `
 
-const StyledNavBarLink = styled(Link)`
-  font-size: 1.6rem;
-  color: ${props => (props.active ? COLORS.BLUE : COLORS.BLACK)};
-  display: block;
-  text-decoration: none;
-  border-bottom: ${props =>
-    props.active ? `3px solid ${COLORS.RED}` : 'none'};
-  padding: 0 8px;
+const Button = styled.button`
+  font-size: 2rem;
+  color: ${COLORS.WHITE};
+  padding: 0 24px;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
+`
 
-  &:visited {
-    color: ${props => (props.active ? COLORS.BLUE : COLORS.BLACK)};
-  }
-
-  &:hover {
-    color: ${COLORS.BLUE};
-  }
+const Logo = styled.h1`
+  font-size: 4rem;
+  color: ${COLORS.WHITE};
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: 3.2px;
+  position: relative;
 `
 
 export default Layout

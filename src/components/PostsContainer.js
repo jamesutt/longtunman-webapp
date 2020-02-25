@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import { COLORS } from '../constants'
+import { COLORS, LARGE_SCREEN_WIDTH } from '../constants'
 
 function PostsContainer({ children }) {
   return (
@@ -28,8 +28,8 @@ const StyledPostsContainer = styled.div`
   box-sizing: border-box;
   width: 100%;
 
-  @media (min-width: 1000px) {
-    width: 1000px;
+  @media (min-width: ${LARGE_SCREEN_WIDTH}px) {
+    width: ${LARGE_SCREEN_WIDTH}px;
     margin: 0 auto;
     padding: 16px 0;
     justify-content: flex-end;
@@ -39,7 +39,7 @@ const StyledPostsContainer = styled.div`
 const StyledAds = styled.div`
   margin-left: 16px;
 
-  @media (max-width: 999px) {
+  @media (max-width: ${LARGE_SCREEN_WIDTH - 1}px) {
     display: none;
   }
 `

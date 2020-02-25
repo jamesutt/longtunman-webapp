@@ -37,8 +37,9 @@ function CategoryPosts({ termId }) {
     }
   })
 
-  if (loading) return <div>Loading...</div>
-  if (error) return <div>Error</div>
+  if (loading || error) {
+    return <div></div>
+  }
 
   return (
     <>

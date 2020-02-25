@@ -1,12 +1,16 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import { COLORS } from '../constants'
+import { COLORS, MAX_POST_WIDTH } from '../constants'
 import defaultThumbnail from '../assets/defaultThumbnail.jpg'
 import { getThaiDate } from '../utils'
 
 function Post({ post }) {
   return (
-    <StyledPost>
+    <StyledPost
+      onClick={() => {
+        window.location.href = `https://www.longtunman.com/${post.id}`
+      }}
+    >
       {post.thumbnail ? (
         <img src={post.thumbnail.src} alt="" />
       ) : (
@@ -24,7 +28,7 @@ function Post({ post }) {
 }
 
 const StyledPost = styled.div`
-  max-width: 668px;
+  max-width: ${MAX_POST_WIDTH}px;
   background-color: ${COLORS.WHITE};
   cursor: pointer;
   border-bottom: 4px solid ${COLORS.BLUE};
