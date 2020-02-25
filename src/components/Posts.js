@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { useBottomScrollListener } from 'react-bottom-scroll-listener'
 import Post from './Post'
