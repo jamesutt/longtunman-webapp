@@ -1,3 +1,5 @@
+[Live demo](https://longtunman-webapp.netlify.com/)
+
 ## To run the app
 
 1. Rename `.env.template` file to `.env` and fill in the environment variables
